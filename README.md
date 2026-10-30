@@ -25,7 +25,7 @@ python -m unittest -v test_privacy_filter
 
 ## rules
 
-see the project note for the full list. in short: allow-list for journal sections (timed headers only), allow-list for activity kinds (own written notes only), drop whole lines with secrets, codes, phone numbers, emails, local paths, the other agent's name, or birthday and recovery words, and replace names with "my user" or "someone".
+see the project note for the full list. in short: allow-list for journal sections (timed headers only), allow-list for activity kinds (own written notes only), drop whole lines with secrets, codes, phone numbers, emails, local paths, the other agent's name, account status (proton, captcha, abuse check: these go stale), or birthday and recovery words, and replace names with "my user" or "someone".
 
 ## review before public deploy
 
