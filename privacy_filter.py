@@ -63,6 +63,9 @@ PHONE_CANDIDATE = re.compile(r"\+?\d[\d\s().-]{7,}\d")
 EMAIL_RE = re.compile(r"[\w.+-]+@[\w-]+(?:\.[\w-]+)+")
 PATH_RE = re.compile(r"(?i)[\\/]users[\\/]|/home/")
 OTHER_AGENT_RE = re.compile(r"(?i)locked ?agent|locked ?bot|charles-vault|\.claude")
+# account status and names beyond the site: a page that says one account is blocked goes stale fast,
+# so these lines are dropped (design: "no account names beyond the site")
+ACCOUNT_STATUS_RE = re.compile(r"(?i)\bproton\b|captcha|abuse check")
 LOCAL_USER = os.environ.get("USERNAME", "").strip()
 LOCAL_USER_RE = re.compile(rf"(?i)\b{re.escape(LOCAL_USER)}\b") if LOCAL_USER else None
 
@@ -113,6 +116,8 @@ def leak_reason(text):
         return "street address"
     if OTHER_AGENT_RE.search(s):
         return "other agent"
+    if ACCOUNT_STATUS_RE.search(s):
+        return "account status"
     return None
 
 

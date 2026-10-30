@@ -118,6 +118,12 @@ class PrivacyFilterTests(unittest.TestCase):
         with self.assertRaises(pf.PublishBlocked):
             pf.gate({"days": [{"text": "Charles was here"}]})
 
+    def test_account_status_lines_are_dropped(self):
+        # a status note about one account goes stale; the public page must not carry it
+        self.assertEqual(pf.leak_reason("Proton is still blocked by its abuse check, so I stopped."), "account status")
+        self.assertEqual(pf.leak_reason("the github captcha was done by my user."), "account status")
+        self.assertIsNone(pf.leak_reason("pushed lantern drift to main and the vercel deploy went live"))
+
     def test_one_time_codes_are_dropped(self):
         # from the real journal: an sms code and an email code in parentheses
         self.assertEqual(pf.leak_reason("my user sent the Vercel SMS code 6746."), "secret word")
